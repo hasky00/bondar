@@ -802,7 +802,8 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn test_get_host_uid() {
-        assert!(get_host_uid().unwrap() > 0);
+        // uid 0 (root) is a valid result, e.g. when the suite runs in a CI container
+        assert!(get_host_uid().is_some());
         assert!(get_host_gid().is_some());
     }
 
